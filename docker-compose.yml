@@ -15,7 +15,11 @@ services:
         image: php:8.1-fpm-alpine
         volumes:
             - ./:/var/www/Test
-        command: /bin/sh -c "docker-php-ext-install mysqli pdo pdo_mysql && echo 'upload_max_filesize = 100M' >> /usr/local/etc/php/conf.d/docker-php-upload-max-filesize.ini && echo 'post_max_size = 100M' >> /usr/local/etc/php/conf.d/docker-php-post-max-size.ini && echo 'max_execution_time = 90' >> /usr/local/etc/php/conf.d/docker-php-max_execution_time.ini && echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memory_limit.ini && php-fpm"
+        command: /bin/sh -c "docker-php-ext-install mysqli pdo pdo_mysql && \
+            echo 'upload_max_filesize = 100M' >> /usr/local/etc/php/conf.d/docker-php-upload-max-filesize.ini && \
+            echo 'post_max_size = 100M' >> /usr/local/etc/php/conf.d/docker-php-post-max-size.ini && \
+            echo 'max_execution_time = 90' >> /usr/local/etc/php/conf.d/docker-php-max_execution_time.ini && \
+            echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memory_limit.ini && php-fpm"
 
 
     composer:
