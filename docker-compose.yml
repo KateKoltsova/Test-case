@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+    nginx:
+        image: "nginx:stable-alpine"
+        ports:
+            - "8080:80"
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf:rw
+            - ./:/var/www/Test
+        depends_on:
+            - php
+
+    php:
+        image: php:8.1-fpm-alpine
+        volumes:
+            - ./:/var/www/Test
+        command: /bin/sh -c "docker-php-ext-install mysqli pdo pdo_mysql && echo 'upload_max_filesize = 100M' >> /usr/local/etc/php/conf.d/docker-php-upload-max-filesize.ini && echo 'post_max_size = 100M' >> /usr/local/etc/php/conf.d/docker-php-post-max-size.ini && echo 'max_execution_time = 90' >> /usr/local/etc/php/conf.d/docker-php-max_execution_time.ini && echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memory_limit.ini && php-fpm"
+
+
+    composer:
+        image: composer
+        volumes:
+            - ./:/var/www/Test
+        working_dir: /var/www/Test
+        command: install --ignore-platform-reqs
